@@ -16,6 +16,7 @@ paths:
         | **304**     | `NOT MODIFIED`       | Los recambios de la lista no han sido modificados         |
         | **400**     | `BAD REQUEST`        | Se ha introducido algún valor erróneo en la consulta      |
         | **404**     | `NOT FOUND`          | No existen recambios registrados                          |
+        Se puede utilizar el ETag de una anterior consulta para caché.
       operationId: recambios_cget
       parameters:
         - $ref: "#/components/parameters/pageParam"
@@ -23,16 +24,16 @@ paths:
         - $ref: "#/components/parameters/orderParam"
         - $ref: "#/components/parameters/orderingParam"
         - $ref: "#/components/parameters/nombreFilterParam"
-        # TODO: Añadir ETag para caché
+        - $ref: "#/components/parameters/ifNoneMatchParam"
       responses:
         '200':
           description: >
             Lista de los recambios registrados
             y links a las páginas `first`, `last`,
             `prev` (si no es la primera) y `next` (si no es la última)
-          #headers:
-          #  ETag:
-          #    $ref:
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
           content:
             application/json:
               schema:
@@ -314,6 +315,14 @@ components:
       allowEmptyValue: false
       schema:
         type: string
+    ifNoneMatchParam:
+      name: If-None-Match
+      in: header
+      description: ETag del recurso
+      required: false
+      schema:
+        type: string
+        pattern: "[0-9a-f]*"
     recambioId:
       name: recambioId
       in: path
@@ -346,9 +355,9 @@ components:
               $ref: '#/components/examples/response-http-404'
     Response_304:
       description: '`NOT MODIFIED`: El recurso solicitado no ha sido modificado'
-      #headers:
-      #  ETag:
-      #    $ref:
+      headers:
+        ETag:
+          $ref: "#/components/headers/ETag"
       content:
         application/problem+json:
           schema:
