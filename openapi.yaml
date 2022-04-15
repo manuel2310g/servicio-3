@@ -177,6 +177,7 @@ components:
           type: array
           items:
               $ref: '#/components/schemas/Recambio'
+          nullable: true
           description: Referencia a otros recambios equivalentes
         cantidad:
           type: integer
