@@ -76,6 +76,72 @@ paths:
         '404':
           $ref: '#/components/responses/Response_404'
 
+    #put:
+    #  summary: Modifica un recambio
+    #  description: |
+    #    La siguiente tabla define los códigos de estado que puede devolver este endpoint
+    #    | Status Code | Descripción         | Motivo                                        |
+    #    | ------------| --------------------| ----------------------------------------------|
+    #    | **200**     | OK                  | El recambio se ha modificado correctamente    |
+    #    | **404**     | NOT FOUND           | Si el recambio no existe                      |
+    #  operationId: recambio_put
+    #  parameters:
+    #    - $ref: '#/components/parameters/ifMatchParam'
+    #  requestBody:
+    #    $ref: '#/components/requestBodies/recambioUpdate'
+    #  responses:
+    #    '200':
+    #      description: '`OK`: el recambio ha sido modificado'
+    #      content:
+    #        application/json:
+    #          schema:
+    #            $ref: '#/components/schemas/Recambio'
+    #    '404':
+    #      $ref: '#/components/responses/Response_404'
+  /recambios/{recambioId}:
+    parameters:
+      - $ref: '#/components/parameters/recambioId'
+    get:
+      summary: Obtiene un recambio identificado por su `recambioId`
+      description: |        
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        
+        | Status Code      | Descripción | Motivo                             |
+        | ---------------- | ------------| -----------------------------------|
+        | **200**          | OK          | Si el recambio existe                 |
+        | **404**          | NOT FOUND   | Si el recambio no existe              |
+      responses:
+        '200':
+          description: Videojuego
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+              examples:
+                recambioExample:
+                  $ref: '#/components/examples/recambio-example'
+        '404':
+          $ref: '#/components/responses/Response_404'
+
+    delete:
+      summary: descataloga un recambio identificado por su `recambioId`
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        
+        | Status Code      | Descripción | Motivo                                    |
+        | ---------------- | ------------| ------------------------------------------|
+        | **204**          | NO CONTENT  | El recambio existía y ha sido eliminado |
+        | **404**          | NOT FOUND   | Si el recambio no existe                |
+
+      responses:
+        '204':
+          description: recambio eliminado &lt;Cuerpo de la respuesta vacío&gt;
+        '404':
+          $ref: '#/components/responses/Response_404'
+
 components:
   schemas:
     Recambio:
@@ -248,6 +314,26 @@ components:
       allowEmptyValue: false
       schema:
         type: string
+    recambioId:
+      name: recambioId
+      in: path
+      description: Identificador único del recambio
+      schema:
+        type: integer
+        format: int32
+      required: true
+
+  headers:
+    ETag:
+      description: Entity Tag (identificador único proporcionado para validación de caché)
+      schema:
+        type: string
+        pattern: "[0-9a-f]*"
+        # https://github.com/marak/Faker.js#api-methods
+        x-faker: random.uuid
+        example:
+          33a64df551425fcc
+
   responses:
     Response_404:
       description: '`NOT FOUND`: recurso no disponible'
@@ -270,13 +356,65 @@ components:
           examples:
             response-http-304:
               $ref: '#/components/examples/response-http-304'
+    Response_412:
+      description: '`PRECONDITION FAILED`: El ETag proporcionado no está actualizado'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-412:
+              $ref: '#/components/examples/response-http-412'
+
+    Response_422:
+      description: >
+        `UNPROCESSABLE ENTITY`
+        Falta alguno de los atributos obligatorios (`nombre`, `empresa`, `version` o `año_publicación`)
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-422:
+              $ref: '#/components/examples/response-http-422'
+
   examples:
-    response-http-404:
+    recambio-example:
       value:
-        type: https://httpstatuses.com/404
-        title: NOT FOUND
-        status: 404
-        detail: El recurso solicitado no está disponible.
+        recambio:
+          id: 2022
+          nombre: 'Neumatico: Continental VancoCamper 215/70 R15CP 109R 8PR'
+          descripcion: 'neumatico para coche'
+          proveedor: 'Continental VancoCamper'
+          modelo: '215/70 R15CP 109R 8PR'
+          equivalencias: 'NO DISPONIBLE'
+          cantidad: 20
+          vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
+          peso: 5
+          dimensiones: 40 40 20
+          precio: 80
+  
+    response-http-404:
+        value:
+          type: https://httpstatuses.com/404
+          title: NOT FOUND
+          status: 404
+          detail: El recurso solicitado no está disponible.
+          instance: about:blank
+
+    response-http-412:
+        value:
+          type: https://httpstatuses.com/412
+          title: PRECONDITION FAILED
+          status: 412
+          detail: El ETag proporcionado no está actualizado
+          instance: about:blank
+    response-http-422:
+      value:
+        type: https://httpstatuses.com/422
+        title: UNPROCESSABLE ENTITY
+        status: 422
+        detail: Falta alguno de los atributos obligatorios (nombre, empresa, version o año_publicación)
         instance: about:blank
     response-http-304:
       value:
@@ -284,4 +422,3 @@ components:
         title: NOT MODIFIED
         status: 304
         detail: El recurso solicitado no ha sido modificado.
-        instance: about:blank
