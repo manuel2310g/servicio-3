@@ -12,29 +12,6 @@ paths:
       responses:
         '200':
           description:  Lista de los recambios
-          
-    put:
-        summary: Modifica un recambio
-        description: |
-        La siguiente tabla define los códigos de estado que puede devolver este endpoint
-        | Status Code | Descripción         | Motivo                                        |
-        | ------------| --------------------| ----------------------------------------------|
-        | **200**     | OK                  | El recambio se ha modificado correctamente    |
-        | **404**     | NOT FOUND           | Si el recambio no existe                    |
-      operationId: recambio_put
-      parameters:
-        - $ref: '#/components/parameters/ifMatchParam'
-      requestBody:
-        $ref: '#/components/requestBodies/recambioUpdate'
-      responses:
-        '200':
-          description: '`OK`: el recambio ha sido modificado'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Recambio'
-        '404':
-          $ref: '#/components/responses/Response_404'
 
 components:
   schemas:
