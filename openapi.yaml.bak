@@ -1,0 +1,129 @@
+openapi: 3.0.2
+
+info:
+  title: '[Grupo 3] Especificación API REST Recambios'
+  version: '1.0'
+
+paths:
+  /recambios:
+    get:
+      summary: Obtiene todos los recambios
+      description: ''
+      responses:
+        '200':
+          description:  Lista de los recambios
+
+components:
+  schemas:
+    Recambio:
+      description: 'Información de un recambio'
+      title: '⚙ Recambio'
+      type: object
+      required:
+        - nombre
+        - proveedor
+        - modelo
+        - cantidad
+        - precio
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Id de un recambio. Existe un único id para cada nombre + proveedor + modelo
+          readOnly: true
+        nombre:
+          type: string
+          description: Nombre del recambio
+        descripcion:
+          type: string
+          description: Descripción del recambio
+        proveedor:
+          type: string
+          description: Proveedor del recambio
+        modelo:
+          type: string
+          description: Modelo del recambio
+        equivalencias:
+          type: array
+          items:
+              $ref: '#/components/schemas/Recambio'
+          description: Referencia a otros recambios equivalentes
+        cantidad:
+          type: integer
+          format: int32
+          minimum: 0
+          description: Cantidad de recambios
+        vehiculos_compatibles:
+          type: array
+          items:
+            type: string
+          description: Lista de vehículos compatibles con el recambio
+        peso:
+          type: number
+          format: float
+          minimum: 0
+          description: Peso del recambio en kilogramos
+        dimensiones:
+          type: object
+          properties:
+            alto:
+              type: number
+              format: float
+              minimum: 0
+              description: Alto en centímetros
+            ancho:
+              type: number
+              format: float
+              minimum: 0
+              description: Ancho en centímetros
+            largo:
+              type: number
+              format: float
+              minimum: 0
+              description: Largo en centímetros
+          description: Dimensiones del recambio
+        precio:
+          type: integer
+          format: int32
+          minimum: 0
+          description: Precio unitario de los recambios en euros
+    HTTP_Problem:
+      type: object
+      externalDocs:
+        url: https://tools.ietf.org/html/rfc7807
+      description: Problem Details for HTTP APIs
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference [RFC3986] that identifies the problem type
+        title:
+          type: string
+          description: short human-readable summary of the problem type
+        status:
+          type: number
+          description: HTTP status code
+        detail:
+          type: string
+          description: human-readable explanation specific to this occurrence of the problem
+        instance:
+          type: string
+          format: uri
+          description: "A URI reference that identifies the specific
+                occurrence of the problem. It may or may not yield further
+                information if dereferenced"
+    Link:
+      description: Enlace de relación
+      title: '🔗 Link'
+      type: object
+      properties:
+        href:
+          description: URL del enlace
+          type: string
+          format: url
+          x-faker: internet.url
+        rel:
+          description: "Relación del documento enlazado con el actual. Contiene una lista de tipos
+                        de enlaces separados por espacio."
+          type: string
+          x-faker: lorem.words
