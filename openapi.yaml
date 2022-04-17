@@ -145,6 +145,7 @@ paths:
   /recambios/{recambioId}/equivalencias:
     parameters:
       - $ref: '#/components/parameters/recambioId'
+      - $ref: "#/components/parameters/ifNoneMatchParam"
     get:
       summary: Obtiene todos los recambios equivalentes con el recambio indicado
       description: |
@@ -248,6 +249,7 @@ paths:
           $ref: "#/components/responses/Response_404"
         '409':
           $ref: "#/components/responses/Response_409"
+    # delete: # TODO
 
 components:
   schemas:
