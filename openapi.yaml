@@ -279,11 +279,6 @@ components:
         modelo:
           type: string
           description: Modelo del recambio
-        equivalencias:
-          type: array
-          items:
-              $ref: '#/components/schemas/Recambio'
-          description: Referencia a otros recambios equivalentes
         cantidad:
           type: integer
           format: int32
@@ -519,7 +514,6 @@ components:
           descripcion: 'neumatico para coche'
           proveedor: 'Continental VancoCamper'
           modelo: '215/70 R15CP 109R 8PR'
-          equivalencias: 'NO DISPONIBLE'
           cantidad: 20
           vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
           peso: 5
