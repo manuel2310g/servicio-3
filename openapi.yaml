@@ -142,6 +142,112 @@ paths:
           description: recambio eliminado &lt;Cuerpo de la respuesta vacío&gt;
         '404':
           $ref: '#/components/responses/Response_404'
+  /recambios/{recambioId}/equivalencias:
+    parameters:
+      - $ref: '#/components/parameters/recambioId'
+    get:
+      summary: Obtiene todos los recambios equivalentes con el recambio indicado
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                    |
+        |-------------|----------------------|-----------------------------------------------------------|
+        | **200**     | `OK`                 | Hay recambios equivalentes                                |
+        | **304**     | `NOT MODIFIED`       | Los recambios equivalentes no han sido modificados        |
+        | **404**     | `NOT FOUND`          | No existen recambios registrados                          |
+        Se puede utilizar el ETag de una anterior consulta para caché.
+      operationId: recambios_equivalencias_cget
+      responses:
+        '200':
+          description: Lista de los recambios equivalentes
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recambios:
+                    description: Lista de recambios
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Recambio"
+                  links:
+                    description: Enlaces de relación
+                    type: object
+                    properties:
+                      parent:
+                        $ref: "#/components/schemas/Link"
+                      self:
+                        $ref: "#/components/schemas/Link"
+        '304':
+          $ref: '#/components/responses/Response_304'
+        '404':
+          $ref: '#/components/responses/Response_404'
+  /recambios/{recambioId}/equivalencias/{recambioEquivalenteId}:
+    parameters:
+    - $ref: "#/components/parameters/recambioId"
+    - $ref: "#/components/parameters/recambioEquivalenteId"
+    get:
+      summary: Obtiene el recambio equivalente si lo es
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                            |
+        |-------------|----------------------|-------------------------------------------------------------------|
+        | **200**     | `OK`                 | Ambos recambios existen y el recambio es equivalente              |
+        | **404**     | `NOT FOUND`          | Alguno de los recambios no existe o el recambio no es equivalente |
+      operationId: recambios_equivalencias_get
+      responses:
+        '200':
+          description: Recambio equivalente
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recambio"
+              examples:
+                recambioExample:
+                  $ref: "#/components/examples/recambio-example"
+        '404':
+          $ref: "#/components/responses/Response_404"
+    head:
+      summary: Comprueba si el recambio es equivalente
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                            |
+        |-------------|----------------------|-------------------------------------------------------------------|
+        | **200**     | `OK`                 | Ambos recambios existen y el recambio es equivalente              |
+        | **404**     | `NOT FOUND`          | Alguno de los recambios no existe o el recambio no es equivalente |
+      operationId: recambios_equivalencias_head
+      responses:
+        '200':
+          description: El recambio es equivalente
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+        '404':
+          description: Alguno de los recambios no existe o el recambio no es equivalente
+    post:
+      summary: Añade un recambio equivalente al recambio. La operación es simétrica*
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                    |
+        |-------------|----------------------|-----------------------------------------------------------|
+        | **201**     | `CREATED`            | Se ha añadido la equivalencia del recambio                |
+        | **404**     | `NOT FOUND`          | Alguno de los recambios no existe                         |
+        | **409**     | `CONFLICT`           | Los recambios ya eran equivalentes                        |
+        ---
+        \* El recambio equivalente tendrá de equivalente también al recambio.
+      operationId: recambios_equivalencias_post
+      responses:
+        '201':
+          description: Equivalencia creada
+        '404':
+          $ref: "#/components/responses/Response_404"
+        '409':
+          $ref: "#/components/responses/Response_409"
 
 components:
   schemas:
@@ -331,6 +437,14 @@ components:
         type: integer
         format: int32
       required: true
+    recambioEquivalenteId:
+      name: recambioEquivalenteId
+      in: path
+      description: Identificador único del recambio equivalente
+      schema:
+        type: integer
+        format: int32
+      required: true
 
   headers:
     ETag:
@@ -365,6 +479,15 @@ components:
           examples:
             response-http-304:
               $ref: '#/components/examples/response-http-304'
+    Response_409:
+      description: '`CONFLICT`: El recurso que se ha intentado añadir ya existía'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-409-recambios-equivalencias:
+              $ref: '#/components/examples/response-http-409-recambios-equivalencias'
     Response_412:
       description: '`PRECONDITION FAILED`: El ETag proporcionado no está actualizado'
       content:
@@ -402,7 +525,7 @@ components:
           peso: 5
           dimensiones: 40 40 20
           precio: 80
-  
+
     response-http-404:
         value:
           type: https://httpstatuses.com/404
@@ -431,3 +554,9 @@ components:
         title: NOT MODIFIED
         status: 304
         detail: El recurso solicitado no ha sido modificado.
+    response-http-409-recambios-equivalencias:
+      value:
+        type: https://httpstatuses.com/409
+        title: CONFLICT
+        status: 409
+        detail: Se ha intentado añadir una equivalencia que ya existía.
