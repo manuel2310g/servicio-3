@@ -373,6 +373,37 @@ components:
           format: int32
           minimum: 0
           description: Precio unitario de los recambios en euros
+        links:
+          description: Enlaces de relación
+          readOnly: true
+          type: object
+          properties:
+            parent:
+              $ref: "#/components/schemas/Link"
+            self:
+              $ref: "#/components/schemas/Link"
+      example:
+        recambio:
+          id: 2022
+          nombre: 'Neumatico: Continental VancoCamper 215/70 R15CP 109R 8PR'
+          descripcion: 'neumatico para coche'
+          proveedor: 'Continental VancoCamper'
+          modelo: '215/70 R15CP 109R 8PR'
+          cantidad: 20
+          vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
+          peso: 5
+          dimensiones:
+            alto: 40
+            ancho: 40
+            largo: 20
+          precio: 80
+          links:
+            parent:
+              href: "https://example.com/api/v1/recambios"
+              rel: "getListaRecambios postRecambio"
+            self:
+              href: "https://example.com/api/v1/recambios/2022"
+              rel: "getRecambio putRecambio deleteRecambio"
     Recambio_Equivalente:
       type: object
       description: 'Información de un recambio equivalente'
@@ -404,6 +435,13 @@ components:
             ancho: 40
             largo: 20
           precio: 80
+          links:
+            parent:
+              href: "https://example.com/api/v1/recambios"
+              rel: "getListaRecambios postRecambio"
+            self:
+              href: "https://example.com/api/v1/recambios/2022"
+              rel: "getRecambio putRecambio deleteRecambio"
         links:
           parent:
             href: 'https://example.com/api/v1/recambios/2020/equivalencias'
@@ -625,6 +663,13 @@ components:
             ancho: 40
             largo: 20
           precio: 80
+          links:
+            parent:
+              href: "https://example.com/api/v1/recambios"
+              rel: "getListaRecambios postRecambio"
+            self:
+              href: "https://example.com/api/v1/recambios/2022"
+              rel: "getRecambio putRecambio deleteRecambio"
     recambio-equivalente-example:
       value:
         recambio:
