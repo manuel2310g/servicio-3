@@ -407,94 +407,23 @@ components:
 
   parameters:
     pageParam:
-      name: page
-      in: query
-      description: Número de página
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
+      $ref: "./parameters/pageParam.yaml"
     limitParam:
-      name: limit
-      in: query
-      description: >
-        Número de recambios devueltos por cada página.
-        Si es `0`, devuelve todos los recambios en una única página
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        minimum: 0
-        default: 10
+      $ref: "./parameters/limitParam.yaml"
     orderParam:
-      name: order
-      in: query
-      description: 'Ordenación por: `id` | `nombre` | `proveedor` | `cantidad` | `precio`'
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: string
-        enum:
-          - id
-          - nombre
-          - proveedor
-          - cantidad
-          - precio
-        default: id
+      $ref: "./parameters/orderParam.yaml"
     orderingParam:
-      name: ordering
-      in: query
-      description: 'Tipo de ordenación: `ASC` | `DESC`'
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: string
-        enum:
-          - ASC
-          - DESC
-        default: ASC
+      $ref: "./parameters/orderingParam.yaml"
     nombreFilterParam:
-      name: nombreFilter
-      in: query
-      description: Filtro por nombre. Puede ser un substring del nombre
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: string
+      $ref: "./parameters/nombreFilterParam.yaml"
     ifMatchParam:
-      name: If-Match
-      in: header
-      description: ETag del Recambio que se desea modificar
-      required: true
-      schema:
-        type: string
-        pattern: "[0-9a-f]*"
+      $ref: "./parameters/ifMatchParam.yaml"
     ifNoneMatchParam:
-      name: If-None-Match
-      in: header
-      description: ETag del recurso
-      required: false
-      schema:
-        type: string
-        pattern: "[0-9a-f]*"
+      $ref: "./parameters/ifNoneMatchParam.yaml"
     recambioId:
-      name: recambioId
-      in: path
-      description: Identificador único del recambio
-      schema:
-        type: integer
-        format: int32
-      required: true
+      $ref: "./parameters/recambioId.yaml"
     recambioEquivalenteId:
-      name: recambioEquivalenteId
-      in: path
-      description: Identificador único del recambio equivalente
-      schema:
-        type: integer
-        format: int32
-      required: true
+      $ref: "./parameters/recambioEquivalenteId.yaml"
 
   headers:
     ETag:
