@@ -77,19 +77,30 @@ paths:
         '404':
           $ref: '#/components/responses/Response_404'
 
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambios_coptions
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow'
+
     post:
       summary: Añade un recambio al inventario
       description: |
         Los códigos de estado que puede devolver este endpoint son:
         | Status Code | Descripción          | Motivo                                                    |
         |-------------|----------------------|-----------------------------------------------------------|
-        | **201**     | `OK`                 | Se crea un nuevo recambio correctamente                                 |
+        | **201**     | `OK`                 | Se crea un nuevo recambio correctamente                   |
         | **400**     | `BAD REQUEST`        | Se ha introducido algún valor erróneo en la consulta      |
       responses:
         '201':
           description:  Nuevo recambio añadido
         '400':
-          description: '`BAD REQUEST`: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio
+          description: '`BAD REQUEST`: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio'
           content:
             application/problem+json:
               schema:
@@ -103,28 +114,28 @@ paths:
                     detail: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio
                     instance: about:blank
       
-    #put:
-    #  summary: Modifica un recambio
-    #  description: |
-    #    La siguiente tabla define los códigos de estado que puede devolver este endpoint
-    #    | Status Code | Descripción         | Motivo                                        |
-    #    | ------------| --------------------| ----------------------------------------------|
-    #    | **200**     | OK                  | El recambio se ha modificado correctamente    |
-    #    | **404**     | NOT FOUND           | Si el recambio no existe                      |
-    #  operationId: recambio_put
-    #  parameters:
-    #    - $ref: '#/components/parameters/ifMatchParam'
-    #  requestBody:
-    #    $ref: '#/components/requestBodies/recambioUpdate'
-    #  responses:
-    #    '200':
-    #      description: '`OK`: el recambio ha sido modificado'
-    #      content:
-    #        application/json:
-    #          schema:
-    #            $ref: '#/components/schemas/Recambio'
-    #    '404':
-    #      $ref: '#/components/responses/Response_404'
+    put:
+      summary: Modifica un recambio
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        | Status Code | Descripción         | Motivo                                        |
+        | ------------| --------------------| ----------------------------------------------|
+        | **200**     | OK                  | El recambio se ha modificado correctamente    |
+        | **404**     | NOT FOUND           | Si el recambio no existe                      |
+      operationId: recambio_put
+      parameters:
+        - $ref: '#/components/parameters/ifMatchParam'
+      requestBody:
+        $ref: '#/components/requestBodies/recambioUpdate'
+      responses:
+        '200':
+          description: '`OK`: el recambio ha sido modificado'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+        '404':
+          $ref: '#/components/responses/Response_404'
   /recambios/{recambioId}:
     parameters:
       - $ref: '#/components/parameters/recambioId'
@@ -152,6 +163,17 @@ paths:
                   $ref: '#/components/examples/recambio-example'
         '404':
           $ref: '#/components/responses/Response_404'
+
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambios_options
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow2'
 
     delete:
       summary: descataloga un recambio identificado por su `recambioId`
@@ -219,6 +241,16 @@ paths:
           $ref: '#/components/responses/Response_304'
         '404':
           $ref: '#/components/responses/Response_404'
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambios_options
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow3'
     post:
       summary: Añade un recambio equivalente al recambio. La operación es simétrica*
       description: |
@@ -297,6 +329,16 @@ paths:
           #    $ref: "#/components/headers/ETag"
         '404':
           description: Alguno de los recambios no existe o el recambio no es equivalente
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambios_options
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow4'
     post:
       deprecated: true
       summary: Añade un recambio equivalente al recambio. La operación es simétrica*
@@ -525,6 +567,67 @@ components:
             type: integer
             format: int32
           example: 2020
+    recambioUpdate:
+      description: Información de actualización de un recambio
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              nombre:
+                type: string
+                description: Nombre del recambio
+              descripcion:
+                type: string
+                description: Descripción del recambio
+              proveedor:
+                type: string
+                description: Proveedor del recambio
+              modelo:
+                type: string
+                description: Modelo del recambio
+              cantidad:
+                type: integer
+                format: int32
+                minimum: 0
+                description: Cantidad de recambios
+              vehiculos_compatibles:
+                type: array
+                items:
+                  type: string
+                description: Lista de vehículos compatibles con el recambio
+              peso:
+                type: number
+                format: float
+                minimum: 0
+                description: Peso del recambio en kilogramos
+              dimensiones:
+                type: object
+                properties:
+                  alto:
+                    type: number
+                    format: float
+                    minimum: 0
+                    description: Alto en centímetros
+                  ancho:
+                    type: number
+                    format: float
+                    minimum: 0
+                    description: Ancho en centímetros
+                  largo:
+                    type: number
+                    format: float
+                    minimum: 0
+                    description: Largo en centímetros
+                description: Dimensiones del recambio
+              precio:
+                type: integer
+                format: int32
+                minimum: 0
+                description: Precio unitario de los recambios en euros             
+          examples:
+            recambioUpdate-example:
+              $ref: '#/components/examples/recambioRB-example'
   parameters:
     pageParam:
       name: page
@@ -583,6 +686,14 @@ components:
       allowEmptyValue: false
       schema:
         type: string
+    ifMatchParam:
+      name: If-Match
+      in: header
+      description: ETag del Recambio que se desea modificar
+      required: true
+      schema:
+        type: string
+        pattern: "[0-9a-f]*"
     ifNoneMatchParam:
       name: If-None-Match
       in: header
@@ -618,6 +729,26 @@ components:
         x-faker: random.uuid
         example:
           33a64df551425fcc
+    Allow:
+      description: Lista de métodos HTTP soportados
+      schema:
+        type: string
+      example: GET,POST,PUT,OPTIONS
+    Allow2:
+      description: Lista de métodos HTTP soportados
+      schema:
+        type: string
+      example: GET,DELETE,OPTIONS
+    Allow3:
+      description: Lista de métodos HTTP soportados
+      schema:
+        type: string
+      example: GET,POST,OPTIONS
+    Allow4:
+      description: Lista de métodos HTTP soportados
+      schema:
+        type: string
+      example: GET,HEAD,POST,PUT,DELETE,OPTIONS
 
   responses:
     Response_404:
@@ -696,6 +827,22 @@ components:
             self:
               href: "https://example.com/api/v1/recambios/2022"
               rel: "getRecambio putRecambio deleteRecambio"
+    recambioRB-example:
+      value:
+        recambio:
+          id: 2022
+          nombre: 'Neumatico: Continental VancoCamper 215/70 R15CP 109R 8PR'
+          descripcion: 'neumatico para coche'
+          proveedor: 'Continental VancoCamper'
+          modelo: '215/70 R15CP 109R 8PR'
+          cantidad: 20
+          vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
+          peso: 5
+          dimensiones:
+            alto: 40
+            ancho: 40
+            largo: 20
+          precio: 80
     recambio-equivalente-example:
       value:
         recambio:
