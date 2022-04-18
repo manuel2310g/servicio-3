@@ -498,14 +498,7 @@ components:
 
   headers:
     ETag:
-      description: Entity Tag (identificador único proporcionado para validación de caché)
-      schema:
-        type: string
-        pattern: "[0-9a-f]*"
-        # https://github.com/marak/Faker.js#api-methods
-        x-faker: random.uuid
-        example:
-          33a64df551425fcc
+      $ref: "./headers/ETag.yaml"
     Allow:
       description: Lista de métodos HTTP soportados
       schema:
@@ -527,21 +520,9 @@ components:
         type: string
       example: GET,HEAD,POST,PUT,DELETE,OPTIONS
     Location-Recambios-Post:
-      description: '`URI` del nuevo recurso'
-      schema:
-        type: string
-        format: uri
-        x-faker: internet.url
-        example:
-          "https://example.com/api/v1/recambios/2022"
+      $ref: "./headers/Location-Recambios-Post.yaml"
     Location-Recambios-Equivalentes-Post:
-      description: '`URI` del nuevo recurso'
-      schema:
-        type: string
-        format: uri
-        x-faker: internet.url
-        example:
-          "https://example.com/api/v1/recambios/2020/equivalencias/2022"
+      $ref: "./headers/Location-Recambios-Equivalentes-Post.yaml"
 
   responses:
     Response_404:
