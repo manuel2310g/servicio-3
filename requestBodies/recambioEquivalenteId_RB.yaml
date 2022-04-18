@@ -1,0 +1,9 @@
+# recambioEquivalenteId_RB
+description: Id del recambio equivalente
+required: true
+content:
+  text/plain:
+    schema:
+      type: integer
+      format: int32
+    example: 2022
