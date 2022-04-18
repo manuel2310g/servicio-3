@@ -77,6 +77,32 @@ paths:
         '404':
           $ref: '#/components/responses/Response_404'
 
+    post:
+      summary: Añade un recambio al inventario
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                    |
+        |-------------|----------------------|-----------------------------------------------------------|
+        | **201**     | `OK`                 | Se crea un nuevo recambio correctamente                                 |
+        | **400**     | `BAD REQUEST`        | Se ha introducido algún valor erróneo en la consulta      |
+      responses:
+        '201':
+          description:  Nuevo recambio añadido
+        '400':
+          description: '`BAD REQUEST`: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/HTTP_Problem"
+              examples:
+                response-http-400-recambios-post:
+                  value:
+                    type: https://httpstatuses.com/400
+                    title: BAD REQUEST
+                    status: 400
+                    detail: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio
+                    instance: about:blank
+                    
     #put:
     #  summary: Modifica un recambio
     #  description: |
