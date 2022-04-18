@@ -90,6 +90,9 @@ paths:
       responses:
         '201':
           description:  Nuevo recambio añadido
+          headers:
+            Location:
+              $ref: "#/components/headers/Location-Recambios-Post"
           content:
             application/json:
               schema:
@@ -245,6 +248,9 @@ paths:
         $ref: '#/components/requestBodies/recambioEquivalenteId_RB'
       responses:
         '201':
+          headers:
+            Location:
+              $ref: "#/components/headers/Location-Recambios-Equivalentes-Post"
           description: Equivalencia creada
         '400':
           description: '`BAD REQUEST`: Se ha introducido un id incorrecto o que no existe.'
@@ -602,7 +608,7 @@ components:
           schema:
             type: integer
             format: int32
-          example: 2020
+          example: 2022
   parameters:
     pageParam:
       name: page
@@ -696,6 +702,22 @@ components:
         x-faker: random.uuid
         example:
           33a64df551425fcc
+    Location-Recambios-Post:
+      description: '`URI` del nuevo recurso'
+      schema:
+        type: string
+        format: uri
+        x-faker: internet.url
+        example:
+          "https://example.com/api/v1/recambios/2022"
+    Location-Recambios-Equivalentes-Post:
+      description: '`URI` del nuevo recurso'
+      schema:
+        type: string
+        format: uri
+        x-faker: internet.url
+        example:
+          "https://example.com/api/v1/recambios/2020/equivalencias/2022"
 
   responses:
     Response_404:
