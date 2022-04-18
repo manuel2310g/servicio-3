@@ -168,11 +168,11 @@ paths:
               schema:
                 type: object
                 properties:
-                  recambios:
+                  recambios_equivalentes:
                     description: Lista de recambios
                     type: array
                     items:
-                      $ref: "#/components/schemas/Recambio"
+                      $ref: "#/components/schemas/Recambio_Equivalente"
                   links:
                     description: Enlaces de relación
                     type: object
@@ -207,10 +207,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Recambio"
-              examples:
-                recambioExample:
-                  $ref: "#/components/examples/recambio-example"
+                $ref: "#/components/schemas/Recambio_Equivalente"
         '404':
           $ref: "#/components/responses/Response_404"
     head:
@@ -320,6 +317,44 @@ components:
           format: int32
           minimum: 0
           description: Precio unitario de los recambios en euros
+    Recambio_Equivalente:
+      type: object
+      description: 'Información de un recambio equivalente'
+      title: '⚙ Recambio equivalente'
+      properties:
+        recambio:
+          $ref: "#/components/schemas/Recambio"
+        links:
+          description: Enlaces de relación
+          readOnly: true
+          type: object
+          properties:
+            parent:
+              $ref: "#/components/schemas/Link"
+            self:
+              $ref: "#/components/schemas/Link"
+      example:
+        recambio:
+          id: 2022
+          nombre: 'Neumatico: Continental VancoCamper 215/70 R15CP 109R 8PR'
+          descripcion: 'neumatico para coche'
+          proveedor: 'Continental VancoCamper'
+          modelo: '215/70 R15CP 109R 8PR'
+          cantidad: 20
+          vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
+          peso: 5
+          dimensiones:
+            alto: 40
+            ancho: 40
+            largo: 20
+          precio: 80
+        links:
+          parent:
+            href: 'https://example.com/api/v1/recambios/2020/equivalencias'
+            rel: 'getEquivalencias'
+          self:
+            href: 'https://example.com/api/v1/recambios/2020/equivalencias/2022'
+            rel: 'getEquivalencia deleteEquivalencia'
     HTTP_Problem:
       type: object
       externalDocs:
@@ -519,9 +554,34 @@ components:
           cantidad: 20
           vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
           peso: 5
-          dimensiones: 40 40 20
+          dimensiones:
+            alto: 40
+            ancho: 40
+            largo: 20
           precio: 80
-
+    recambio-equivalente-example:
+      value:
+        recambio:
+          id: 2022
+          nombre: 'Neumatico: Continental VancoCamper 215/70 R15CP 109R 8PR'
+          descripcion: 'neumatico para coche'
+          proveedor: 'Continental VancoCamper'
+          modelo: '215/70 R15CP 109R 8PR'
+          cantidad: 20
+          vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
+          peso: 5
+          dimensiones:
+            alto: 40
+            ancho: 40
+            largo: 20
+          precio: 80
+        links:
+          parent:
+            href: 'https://example.com/api/v1/recambios/2020/equivalencias'
+            rel: 'getEquivalencias'
+          self:
+            href: 'https://example.com/api/v1/recambios/2020/equivalencias/2022'
+            rel: 'getEquivalencia deleteEquivalencia'
     response-http-404:
         value:
           type: https://httpstatuses.com/404
