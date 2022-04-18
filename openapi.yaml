@@ -86,7 +86,7 @@ paths:
           description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
           headers:
             Allow:
-              $ref: '#/components/headers/Allow'
+              $ref: '#/components/headers/Allow-G-PO-O'
 
     post:
       summary: Añade un recambio al inventario
@@ -185,7 +185,7 @@ paths:
           description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
           headers:
             Allow:
-              $ref: '#/components/headers/Allow2'
+              $ref: '#/components/headers/Allow-G-PU-D-O'
 
     delete:
       summary: descataloga un recambio identificado por su `recambioId`
@@ -262,7 +262,7 @@ paths:
           description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
           headers:
             Allow:
-              $ref: '#/components/headers/Allow3'
+              $ref: '#/components/headers/Allow-G-PO-O'
     post:
       summary: Añade un recambio equivalente al recambio. La operación es simétrica*
       description: |
@@ -353,7 +353,7 @@ paths:
           description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
           headers:
             Allow:
-              $ref: '#/components/headers/Allow4'
+              $ref: '#/components/headers/Allow-G-H-PO-PU-D-O'
     post:
       deprecated: true
       summary: Añade un recambio equivalente al recambio. La operación es simétrica*
@@ -428,22 +428,17 @@ components:
   headers:
     ETag:
       $ref: "./headers/ETag.yaml"
-    Allow:
-      description: Lista de métodos HTTP soportados
-      schema:
-        type: string
-      example: GET,POST,PUT,OPTIONS
-    Allow2:
-      description: Lista de métodos HTTP soportados
-      schema:
-        type: string
-      example: GET,DELETE,OPTIONS
-    Allow3:
+    Allow-G-PO-O:
       description: Lista de métodos HTTP soportados
       schema:
         type: string
       example: GET,POST,OPTIONS
-    Allow4:
+    Allow-G-PU-D-O:
+      description: Lista de métodos HTTP soportados
+      schema:
+        type: string
+      example: GET,PUT,DELETE,OPTIONS
+    Allow-G-H-PO-PU-D-O:
       description: Lista de métodos HTTP soportados
       schema:
         type: string
