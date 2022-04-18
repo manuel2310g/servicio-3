@@ -429,20 +429,11 @@ components:
     ETag:
       $ref: "./headers/ETag.yaml"
     Allow-G-PO-O:
-      description: Lista de métodos HTTP soportados
-      schema:
-        type: string
-      example: GET,POST,OPTIONS
+      $ref: "./headers/Allow-G-PO-O.yaml"
     Allow-G-PU-D-O:
-      description: Lista de métodos HTTP soportados
-      schema:
-        type: string
-      example: GET,PUT,DELETE,OPTIONS
+      $ref: "./headers/Allow-G-PU-D-O.yaml"
     Allow-G-H-PO-PU-D-O:
-      description: Lista de métodos HTTP soportados
-      schema:
-        type: string
-      example: GET,HEAD,POST,PUT,DELETE,OPTIONS
+      $ref: "./headers/Allow-G-H-PO-PU-D-O.yaml"
     Location-Recambios-Post:
       $ref: "./headers/Location-Recambios-Post.yaml"
     Location-Recambios-Equivalentes-Post:
