@@ -102,7 +102,7 @@ paths:
                     status: 400
                     detail: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio
                     instance: about:blank
-                    
+      
     #put:
     #  summary: Modifica un recambio
     #  description: |
@@ -139,7 +139,7 @@ paths:
         | **404**          | NOT FOUND   | Si el recambio no existe              |
       responses:
         '200':
-          description: Videojuego
+          description: Recambio
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -277,7 +277,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Recambio_Equivalente"
+                $ref: "#/components/schemas/Recambio_Equivalente"              
         '404':
           $ref: "#/components/responses/Response_404"
     head:
