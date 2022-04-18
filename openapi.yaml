@@ -400,7 +400,7 @@ components:
         links:
           parent:
             href: 'https://example.com/api/v1/recambios/2020/equivalencias'
-            rel: 'getEquivalencias'
+            rel: 'getListaEquivalencias postEquivalencia'
           self:
             href: 'https://example.com/api/v1/recambios/2020/equivalencias/2022'
             rel: 'getEquivalencia deleteEquivalencia'
