@@ -284,8 +284,19 @@ paths:
           $ref: "#/components/responses/Response_404"
         '409':
           $ref: "#/components/responses/Response_409"
-    # delete: # TODO
-
+    delete:
+      summary: Elimina la equivalencia entre el recambio y el recambio equivalente
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code      | Descripción | Motivo                                                    |
+        | ---------------- | ------------| ----------------------------------------------------------|
+        | **204**          | NO CONTENT  | Ambos recambios existen y se ha eliminado la equivalencia |
+        | **404**          | NOT FOUND   | El recambio o el recambio equivalente no existen          |
+      responses:
+        '204':
+          description: Equivalencia eliminada &lt;Cuerpo de la respuesta vacío&gt;
+        '404':
+          $ref: "#/components/responses/Response_404"
 components:
   schemas:
     Recambio:
