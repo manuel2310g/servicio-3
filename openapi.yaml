@@ -141,11 +141,10 @@ paths:
         '204':
           description: recambio eliminado &lt;Cuerpo de la respuesta vacío&gt;
         '404':
-          $ref: '#/components/responses/Response_404'
+          $ref: "#/components/responses/Response_404"
   /recambios/{recambioId}/equivalencias:
     parameters:
-      - $ref: '#/components/parameters/recambioId'
-      - $ref: "#/components/parameters/ifNoneMatchParam"
+      - $ref: "#/components/parameters/recambioId"
     get:
       summary: Obtiene todos los recambios equivalentes con el recambio indicado
       description: |
@@ -157,6 +156,8 @@ paths:
         | **404**     | `NOT FOUND`          | No existen recambios registrados                          |
         Se puede utilizar el ETag de una anterior consulta para caché.
       operationId: recambios_equivalencias_cget
+      parameters:
+        - $ref: "#/components/parameters/ifNoneMatchParam"
       responses:
         '200':
           description: Lista de los recambios equivalentes
@@ -185,6 +186,42 @@ paths:
           $ref: '#/components/responses/Response_304'
         '404':
           $ref: '#/components/responses/Response_404'
+    post:
+      summary: Añade un recambio equivalente al recambio. La operación es simétrica*
+      description: |
+        Los códigos de estado que puede devolver este endpoint son:
+        | Status Code | Descripción          | Motivo                                                    |
+        |-------------|----------------------|-----------------------------------------------------------|
+        | **201**     | `CREATED`            | Se ha añadido la equivalencia del recambio                |
+        | **404**     | `NOT FOUND`          | El recambio no existe                         |
+        | **400**     | `BAD REQUEST`        | Se ha introducido algún valor erróneo en la consulta      |
+        | **409**     | `CONFLICT`           | Los recambios ya eran equivalentes                        |
+        ---
+        \* El recambio equivalente tendrá de equivalente también al recambio.
+      operationId: recambios_equivalencias_post
+      requestBody:
+        $ref: '#/components/requestBodies/recambioEquivalenteId_RB'
+      responses:
+        '201':
+          description: Equivalencia creada
+        '400':
+          description: '`BAD REQUEST`: Se ha introducido un id incorrecto o que no existe.'
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/HTTP_Problem"
+              examples:
+                response-http-400-recambios-equivalencias-post:
+                  value:
+                    type: https://httpstatuses.com/400
+                    title: BAD REQUEST
+                    status: 400
+                    detail: Se ha introducido un id incorrecto o que no existe.
+                    instance: about:blank
+        '404':
+          $ref: "#/components/responses/Response_404"
+        '409':
+          $ref: "#/components/responses/Response_409"
   /recambios/{recambioId}/equivalencias/{recambioEquivalenteId}:
     parameters:
     - $ref: "#/components/parameters/recambioId"
@@ -228,6 +265,7 @@ paths:
         '404':
           description: Alguno de los recambios no existe o el recambio no es equivalente
     post:
+      deprecated: true
       summary: Añade un recambio equivalente al recambio. La operación es simétrica*
       description: |
         Los códigos de estado que puede devolver este endpoint son:
@@ -395,6 +433,16 @@ components:
                         de enlaces separados por espacio."
           type: string
           x-faker: lorem.words
+  requestBodies:
+    recambioEquivalenteId_RB:
+      description: Id del recambio equivalente
+      required: true
+      content:
+        text/plain:
+          schema:
+            type: integer
+            format: int32
+          example: 2020
   parameters:
     pageParam:
       name: page
