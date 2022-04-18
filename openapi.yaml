@@ -535,7 +535,7 @@ components:
                 description: Precio unitario de los recambios en euros             
           examples:
             recambioUpdate-example:
-              $ref: '#/components/examples/recambioRB-example'
+              $ref: '#/components/examples/recambio_RB-example'
 
 
   parameters:
@@ -731,112 +731,39 @@ components:
 
   examples:
     recambio-example:
-      value:
-        recambio:
-          id: 2022
-          nombre: 'Neumatico: Continental VancoCamper 215/70 R15CP 109R 8PR'
-          descripcion: 'neumatico para coche'
-          proveedor: 'Continental VancoCamper'
-          modelo: '215/70 R15CP 109R 8PR'
-          cantidad: 20
-          vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
-          peso: 5
-          dimensiones:
-            alto: 40
-            ancho: 40
-            largo: 20
-          precio: 80
-          links:
-            parent:
-              href: "https://example.com/api/v1/recambios"
-              rel: "getListaRecambios postRecambio"
-            self:
-              href: "https://example.com/api/v1/recambios/2022"
-              rel: "getRecambio putRecambio deleteRecambio"
-    recambioRB-example:
-      value:
-        recambio:
-          id: 2022
-          nombre: 'Neumatico: Continental VancoCamper 215/70 R15CP 109R 8PR'
-          descripcion: 'neumatico para coche'
-          proveedor: 'Continental VancoCamper'
-          modelo: '215/70 R15CP 109R 8PR'
-          cantidad: 20
-          vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
-          peso: 5
-          dimensiones:
-            alto: 40
-            ancho: 40
-            largo: 20
-          precio: 80
-    recambio-equivalente-example:
-      value:
-        recambio:
-          id: 2022
-          nombre: 'Neumatico: Continental VancoCamper 215/70 R15CP 109R 8PR'
-          descripcion: 'neumatico para coche'
-          proveedor: 'Continental VancoCamper'
-          modelo: '215/70 R15CP 109R 8PR'
-          cantidad: 20
-          vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
-          peso: 5
-          dimensiones:
-            alto: 40
-            ancho: 40
-            largo: 20
-          precio: 80
-        links:
-          parent:
-            href: 'https://example.com/api/v1/recambios/2020/equivalencias'
-            rel: 'getEquivalencias'
-          self:
-            href: 'https://example.com/api/v1/recambios/2020/equivalencias/2022'
-            rel: 'getEquivalencia deleteEquivalencia'
+      $ref: "./examples/recambio-example.yaml"
     recambio_RB-example:
-      value:
-        nombre: 'Neumatico: Continental VancoCamper 215/70 R15CP 109R 8PR'
-        descripcion: 'neumatico para coche'
-        proveedor: 'Continental VancoCamper'
-        modelo: '215/70 R15CP 109R 8PR'
-        cantidad: 20
-        vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
-        peso: 5
-        dimensiones:
-          alto: 40
-          ancho: 40
-          largo: 20
-        precio: 80
+      $ref: "./examples/recambio_RB-example.yaml"
+    #recambio-equivalente-example:
+    #  value:
+    #    recambio:
+    #      id: 2022
+    #      nombre: 'Neumatico: Continental VancoCamper 215/70 R15CP 109R 8PR'
+    #      descripcion: 'neumatico para coche'
+    #      proveedor: 'Continental VancoCamper'
+    #      modelo: '215/70 R15CP 109R 8PR'
+    #      cantidad: 20
+    #      vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hundai i30 Fastback']
+    #      peso: 5
+    #      dimensiones:
+    #        alto: 40
+    #        ancho: 40
+    #        largo: 20
+    #      precio: 80
+    #    links:
+    #      parent:
+    #        href: 'https://example.com/api/v1/recambios/2020/equivalencias'
+    #        rel: 'getEquivalencias'
+    #      self:
+    #        href: 'https://example.com/api/v1/recambios/2020/equivalencias/2022'
+    #        rel: 'getEquivalencia deleteEquivalencia'
     response-http-404:
-        value:
-          type: https://httpstatuses.com/404
-          title: NOT FOUND
-          status: 404
-          detail: El recurso solicitado no está disponible.
-          instance: about:blank
-
+      $ref: "./examples/response-http-404.yaml"
     response-http-412:
-        value:
-          type: https://httpstatuses.com/412
-          title: PRECONDITION FAILED
-          status: 412
-          detail: El ETag proporcionado no está actualizado
-          instance: about:blank
+      $ref: "./examples/response-http-412.yaml"
     response-http-422:
-      value:
-        type: https://httpstatuses.com/422
-        title: UNPROCESSABLE ENTITY
-        status: 422
-        detail: Falta alguno de los atributos obligatorios (nombre, empresa, version o año_publicación)
-        instance: about:blank
+      $ref: "./examples/response-http-422.yaml"
     response-http-304:
-      value:
-        type: https://httpstatuses.com/304
-        title: NOT MODIFIED
-        status: 304
-        detail: El recurso solicitado no ha sido modificado.
+      $ref: "./examples/response-http-304.yaml"
     response-http-409-recambios-equivalencias:
-      value:
-        type: https://httpstatuses.com/409
-        title: CONFLICT
-        status: 409
-        detail: Se ha intentado añadir una equivalencia que ya existía.
+      $ref: "./examples/response-http-409-recambios-equivalencias.yaml"
