@@ -3,6 +3,11 @@
 ########
 
 ###
+# OPTIONS 204
+OPTIONS http://127.0.0.1:80/api/v1/recambios
+Accept: application/json
+
+###
 # CGET 200
 GET http://127.0.0.1:80/api/v1/recambios
 Accept: application/json
@@ -38,12 +43,105 @@ Accept: application/problem+json
 
 ###
 # POST 201
-GET http://127.0.0.1:80/api/v1/recambios
-Prefer: code=404
+POST http://127.0.0.1:80/api/v1/recambios
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nombre": "Neumático: Continental VancoCamper 215/70 R15CP 109R 8PR",
+  "descripcion": "Neumático para coche",
+  "proveedor": "Continental VancoCamper",
+  "modelo": "215/70 R15CP 109R 8PR",
+  "cantidad": 20,
+  "vehiculos_compatibles": [
+    "Hyundai IONIQ Híbrido",
+    "Hyundai i30 Fastback"
+  ],
+  "peso": 5,
+  "dimensiones": {
+    "alto": 40,
+    "ancho": 40,
+    "largo": 20
+  },
+  "precio": 80
+}
+
+###
+# POST 400 (Falta campo requerido (nombre))
+POST http://127.0.0.1:80/api/v1/recambios
+Accept: application/json
+Content-Type: application/json
+
+{
+  "descripcion": "Neumático para coche",
+  "proveedor": "Continental VancoCamper",
+  "modelo": "215/70 R15CP 109R 8PR",
+  "cantidad": 20,
+  "vehiculos_compatibles": [
+    "Hyundai IONIQ Híbrido",
+    "Hyundai i30 Fastback"
+  ],
+  "peso": 5,
+  "dimensiones": {
+    "alto": 40,
+    "ancho": 40,
+    "largo": 20
+  },
+  "precio": 80
+}
+
+###
+# POST 400 (Valor incorrecto (peso no integer))
+POST http://127.0.0.1:80/api/v1/recambios
+Accept: application/json
+Content-Type: application/json
+
+{
+  "nombre": "Neumático: Continental VancoCamper 215/70 R15CP 109R 8PR",
+  "descripcion": "Neumático para coche",
+  "proveedor": "Continental VancoCamper",
+  "modelo": "215/70 R15CP 109R 8PR",
+  "cantidad": 20,
+  "vehiculos_compatibles": [
+    "Hyundai IONIQ Híbrido",
+    "Hyundai i30 Fastback"
+  ],
+  "peso": "pesado",
+  "dimensiones": {
+    "alto": 40,
+    "ancho": 40,
+    "largo": 20
+  },
+  "precio": 80
+}
+
+###
+# POST 409 (Ya existe un recambio con esa combinación de nombre + proveedor + modelo)
+POST http://127.0.0.1:80/api/v1/recambios
 Accept: application/problem+json
+Prefer: code=409
+Content-Type: application/json
 
+{
+  "nombre": "Neumático: Continental VancoCamper 215/70 R15CP 109R 8PR",
+  "descripcion": "Neumático para coche",
+  "proveedor": "Continental VancoCamper",
+  "modelo": "215/70 R15CP 109R 8PR",
+  "cantidad": 20,
+  "vehiculos_compatibles": [
+    "Hyundai IONIQ Híbrido",
+    "Hyundai i30 Fastback"
+  ],
+  "peso": 5,
+  "dimensiones": {
+    "alto": 40,
+    "ancho": 40,
+    "largo": 20
+  },
+  "precio": 80
+}
 
-####################
+############################################################
 ###
 # GET ERROR 422 (validación parámetros)
 GET http://127.0.0.1:80/api/v1/recambios/abcd
