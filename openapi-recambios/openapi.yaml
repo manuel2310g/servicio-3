@@ -360,7 +360,7 @@ paths:
           description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
           headers:
             Allow:
-              $ref: '#/components/headers/Allow-G-H-PO-PU-D-O'
+              $ref: '#/components/headers/Allow-G-H-PO-D-O'
     delete:
       summary: Elimina la equivalencia entre el recambio y el recambio equivalente
       description: |
@@ -419,8 +419,8 @@ components:
       $ref: "./headers/Allow-G-PO-O.yaml"
     Allow-G-PU-D-O:
       $ref: "./headers/Allow-G-PU-D-O.yaml"
-    Allow-G-H-PO-PU-D-O:
-      $ref: "./headers/Allow-G-H-PO-PU-D-O.yaml"
+    Allow-G-H-PO-D-O:
+      $ref: "./headers/Allow-G-H-PO-D-O.yaml"
     Location-Recambios-Post:
       $ref: "./headers/Location-Recambios-Post.yaml"
     Location-Recambios-Equivalentes-Post:
