@@ -108,10 +108,11 @@ paths:
       summary: Añade un recambio al inventario
       description: |
         Los códigos de estado que puede devolver este endpoint son:
-        | Status Code | Descripción          | Motivo                                                    |
-        |-------------|----------------------|-----------------------------------------------------------|
-        | **201**     | `OK`                 | Se crea un nuevo recambio correctamente                   |
-        | **400**     | `BAD REQUEST`        | Se ha introducido algún valor erróneo en la consulta      |
+        | Status Code | Descripción          | Motivo                                                                         |
+        |-------------|----------------------|--------------------------------------------------------------------------------|
+        | **201**     | `CREATED`            | Se crea un nuevo recambio correctamente                                        |
+        | **400**     | `BAD REQUEST`        | Se ha introducido algún valor erróneo en la consulta                           |
+        | **409**     | `CONFLICT`           | Ya existe un recambio con esa combinación de `nombre` + `proveedor` + `modelo` |
       requestBody:
         $ref: "#/components/requestBodies/recambio_RB"
       responses:
@@ -141,6 +142,8 @@ paths:
                     status: 400
                     detail: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio
                     instance: about:blank
+        '409':
+          $ref: "#/components/responses/Response_409_Recambio"
   /recambios/{recambioId}:
     parameters:
       - $ref: '#/components/parameters/recambioId'
@@ -319,7 +322,7 @@ paths:
         '404':
           $ref: "#/components/responses/Response_404"
         '409':
-          $ref: "#/components/responses/Response_409"
+          $ref: "#/components/responses/Response_409_Recambio_Equivalente"
   /recambios/{recambioId}/equivalencias/{recambioEquivalenteId}:
     parameters:
     - $ref: "#/components/parameters/recambioId"
@@ -391,7 +394,7 @@ paths:
         '404':
           $ref: "#/components/responses/Response_404"
         '409':
-          $ref: "#/components/responses/Response_409"
+          $ref: "#/components/responses/Response_409_Recambio_Equivalente"
     delete:
       summary: Elimina la equivalencia entre el recambio y el recambio equivalente
       description: |
@@ -462,8 +465,10 @@ components:
       $ref: "./responses/Response_404.yaml"
     Response_304:
       $ref: "./responses/Response_304.yaml"
-    Response_409:
-      $ref: "./responses/Response_409.yaml"
+    Response_409_Recambio:
+      $ref: "./responses/Response_409_Recambio.yaml"
+    Response_409_Recambio_Equivalente:
+      $ref: "./responses/Response_409_Recambio_Equivalente.yaml"
     Response_412:
       $ref: "./responses/Response_412.yaml"
     Response_422:
