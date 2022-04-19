@@ -9,6 +9,7 @@ servers:
 
 paths:
   /recambios:
+
     get:
       summary: Obtiene todos los recambios registrados del inventario
       description: |
@@ -142,9 +143,11 @@ paths:
                     instance: about:blank
         '409':
           $ref: "#/components/responses/Response_409_Recambio"
+
   /recambios/{recambioId}:
     parameters:
       - $ref: '#/components/parameters/recambioId'
+
     get:
       summary: Obtiene un recambio identificado por su `recambioId`
       description: |
@@ -166,6 +169,7 @@ paths:
                 $ref: '#/components/schemas/Recambio'
         '404':
           $ref: '#/components/responses/Response_404'
+
     put:
       summary: Modifica un recambio
       description: |
@@ -207,19 +211,21 @@ paths:
       summary: descataloga un recambio identificado por su `recambioId`
       description: |
         La siguiente tabla define los códigos de estado que puede devolver este endpoint
-        | Status Code      | Descripción | Motivo                                    |
-        | ---------------- | ------------| ------------------------------------------|
-        | **204**          | NO CONTENT  | El recambio existía y ha sido eliminado |
-        | **404**          | NOT FOUND   | Si el recambio no existe                |
+        | Status Code | Descripción | Motivo                                    |
+        |-------------|-------------|-------------------------------------------|
+        | **204**     | NO CONTENT  | El recambio existía y ha sido eliminado   |
+        | **404**     | NOT FOUND   | Si el recambio no existe                  |
       operationId: recambios_delete
       responses:
         '204':
           description: recambio eliminado &lt;Cuerpo de la respuesta vacío&gt;
         '404':
           $ref: "#/components/responses/Response_404"
+
   /recambios/{recambioId}/equivalencias:
     parameters:
       - $ref: "#/components/parameters/recambioId"
+
     get:
       summary: Obtiene todos los recambios equivalentes con el recambio indicado
       description: |
@@ -268,6 +274,7 @@ paths:
           $ref: '#/components/responses/Response_304'
         '404':
           $ref: '#/components/responses/Response_404'
+
     options:
       summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
       description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
@@ -278,6 +285,7 @@ paths:
           headers:
             Allow:
               $ref: '#/components/headers/Allow-G-PO-O'
+
     post:
       summary: Añade un recambio equivalente al recambio. La operación es simétrica*
       description: |
@@ -317,10 +325,12 @@ paths:
           $ref: "#/components/responses/Response_404"
         '409':
           $ref: "#/components/responses/Response_409_Recambio_Equivalente"
+
   /recambios/{recambioId}/equivalencias/{recambioEquivalenteId}:
     parameters:
     - $ref: "#/components/parameters/recambioId"
     - $ref: "#/components/parameters/recambioEquivalenteId"
+
     get:
       summary: Obtiene el recambio equivalente si lo es
       description: |
@@ -339,6 +349,7 @@ paths:
                 $ref: "#/components/schemas/Recambio_Equivalente"
         '404':
           $ref: "#/components/responses/Response_404"
+
     head:
       summary: Comprueba si el recambio es equivalente
       description: |
@@ -353,6 +364,7 @@ paths:
           description: El recambio es equivalente
         '404':
           description: Alguno de los recambios no existe o el recambio no es equivalente
+
     options:
       summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
       description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
@@ -363,6 +375,7 @@ paths:
           headers:
             Allow:
               $ref: '#/components/headers/Allow-G-H-PO-D-O'
+
     delete:
       summary: Elimina la equivalencia entre el recambio y el recambio equivalente
       description: |
@@ -377,6 +390,7 @@ paths:
           description: Equivalencia eliminada &lt;Cuerpo de la respuesta vacío&gt;
         '404':
           $ref: "#/components/responses/Response_404"
+
 components:
   schemas:
     Recambio:
