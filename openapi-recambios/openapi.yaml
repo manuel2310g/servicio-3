@@ -59,6 +59,19 @@ paths:
                         $ref: "#/components/schemas/Link"
                       next:
                         $ref: "#/components/schemas/Link"
+                    example:
+                      first:
+                        href: "https://example.com/api/v1/recambios?page=1&limit=1&order=id&ordering=ASC"
+                        rel:  "getListaRecambios"
+                      last:
+                        href: "https://example.com/api/v1/recambios?page=100&limit=1&order=id&ordering=ASC"
+                        rel:  "getListaRecambios"
+                      prev:
+                        href: "https://example.com/api/v1/recambios?page=1&limit=1&order=id&ordering=ASC"
+                        rel:  "getListaRecambios"
+                      next:
+                        href: "https://example.com/api/v1/recambios?page=3&limit=1&order=id&ordering=ASC"
+                        rel:  "getListaRecambios"
         '400':
           description: '`BAD REQUEST`: Se ha introducido algún valor erróneo en la consulta.
                         Por ejemplo, se ha introducido un número de página menor que `1`
