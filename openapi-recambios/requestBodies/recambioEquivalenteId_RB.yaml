@@ -2,8 +2,15 @@
 description: Id del recambio equivalente
 required: true
 content:
-  text/plain:
+  application/json:
     schema:
-      type: integer
-      format: int32
-    example: 2022
+      type: object
+      required:
+        - recambioEquivalenteId
+      properties:
+        recambioEquivalenteId:
+          description: Identificador único del recambio equivalente
+          type: integer
+          format: int32
+    example:
+      recambioEquivalenteId: 2022
