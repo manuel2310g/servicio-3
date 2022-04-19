@@ -28,7 +28,7 @@ $ docker-compose down
 
 ## Swagger UI
 
-Con los servicios desplegados, se puede acceder a una interfaz desde la que se puede revisar la especificación y realizar consultas al servidor *mock*. Se puede acceder desde el navegador en la siguiente URL: `localhost:8000`. El puerto se puede cambiar en el fichero `docker-compose.yaml`.
+Con los servicios desplegados, se puede acceder a una interfaz desde la que se puede revisar la especificación y realizar consultas al servidor *mock*. Se puede acceder desde el navegador en el siguiente URL: `localhost:8000`. El puerto se puede cambiar en el fichero `docker-compose.yaml`.
 
 ## Fichero `http-requests.http`
 
