@@ -3,6 +3,9 @@ openapi: 3.0.2
 info:
   title: '[Grupo 3] Especificación API REST Recambios'
   version: '1.0.0'
+  contact:
+    name: Grupo 3
+    url: 'https://github.com/adrianja5/AOS-Especificacion-Servicio-Grupo3'
 
 servers:
   - url: http://127.0.0.1:80/api/v1
