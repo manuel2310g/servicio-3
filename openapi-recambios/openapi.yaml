@@ -375,26 +375,6 @@ paths:
           headers:
             Allow:
               $ref: '#/components/headers/Allow-G-H-PO-PU-D-O'
-    post:
-      deprecated: true
-      summary: Añade un recambio equivalente al recambio. La operación es simétrica*
-      description: |
-        Los códigos de estado que puede devolver este endpoint son:
-        | Status Code | Descripción          | Motivo                                                    |
-        |-------------|----------------------|-----------------------------------------------------------|
-        | **201**     | `CREATED`            | Se ha añadido la equivalencia del recambio                |
-        | **404**     | `NOT FOUND`          | Alguno de los recambios no existe                         |
-        | **409**     | `CONFLICT`           | Los recambios ya eran equivalentes                        |
-        ---
-        \* El recambio equivalente tendrá de equivalente también al recambio.
-      operationId: recambios_equivalencias_post
-      responses:
-        '201':
-          description: Equivalencia creada
-        '404':
-          $ref: "#/components/responses/Response_404"
-        '409':
-          $ref: "#/components/responses/Response_409_Recambio_Equivalente"
     delete:
       summary: Elimina la equivalencia entre el recambio y el recambio equivalente
       description: |
