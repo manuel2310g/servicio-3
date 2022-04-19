@@ -113,6 +113,7 @@ paths:
         | **201**     | `CREATED`            | Se crea un nuevo recambio correctamente                                        |
         | **400**     | `BAD REQUEST`        | Se ha introducido algún valor erróneo en la consulta                           |
         | **409**     | `CONFLICT`           | Ya existe un recambio con esa combinación de `nombre` + `proveedor` + `modelo` |
+      operationId: recambios_post
       requestBody:
         $ref: "#/components/requestBodies/recambio_RB"
       responses:
@@ -148,10 +149,11 @@ paths:
       summary: Obtiene un recambio identificado por su `recambioId`
       description: |
         La siguiente tabla define los códigos de estado que puede devolver este endpoint
-        | Status Code      | Descripción | Motivo                             |
-        | ---------------- | ------------| -----------------------------------|
+        | Status Code      | Descripción | Motivo                                |
+        | ---------------- | ------------| --------------------------------------|
         | **200**          | OK          | Si el recambio existe                 |
         | **404**          | NOT FOUND   | Si el recambio no existe              |
+      operationId: recambios_get
       responses:
         '200':
           description: Recambio
@@ -209,7 +211,7 @@ paths:
         | ---------------- | ------------| ------------------------------------------|
         | **204**          | NO CONTENT  | El recambio existía y ha sido eliminado |
         | **404**          | NOT FOUND   | Si el recambio no existe                |
-
+      operationId: recambios_delete
       responses:
         '204':
           description: recambio eliminado &lt;Cuerpo de la respuesta vacío&gt;
@@ -269,7 +271,7 @@ paths:
     options:
       summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
       description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
-      operationId: recambios_options
+      operationId: recambios_equivalencias_coptions
       responses:
         '204':
           description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
@@ -354,7 +356,7 @@ paths:
     options:
       summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
       description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
-      operationId: recambios_options
+      operationId: recambios_equivalencias_options
       responses:
         '204':
           description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
@@ -369,6 +371,7 @@ paths:
         | ---------------- | ------------| ------------------------------------------------------------------|
         | **204**          | NO CONTENT  | Ambos recambios existen y se ha eliminado la equivalencia         |
         | **404**          | NOT FOUND   | Alguno de los recambios no existe o el recambio no es equivalente |
+      operationId: recambios_equivalencias_delete
       responses:
         '204':
           description: Equivalencia eliminada &lt;Cuerpo de la respuesta vacío&gt;
