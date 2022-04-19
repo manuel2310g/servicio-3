@@ -22,7 +22,7 @@ Accept: application/problem+json
 ###
 # CGET 200 (caché no válida)
 GET http://127.0.0.1:80/api/v1/recambios
-If-None-Match: 33a64df551425fcc
+If-None-Match: a1b2c3d4e5f6
 Accept: application/json
 
 ###
@@ -197,109 +197,89 @@ DELETE http://127.0.0.1:80/api/v1/recambios/2023
 Prefer: code=404
 Accept: application/problem+json
 
-############################################################################################
+########
+# /recambios/{recambioId}/equivalencias
+########
+
 ###
-# GET ERROR 422 (validación parámetros)
-GET http://127.0.0.1:80/api/v1/recambios/abcd
+# OPTIONS 204
+OPTIONS http://127.0.0.1:80/api/v1/recambios/2020/equivalencias
 Accept: application/json
 
 ###
-# GET 200
-GET http://127.0.0.1:80/api/v1/recambios/1234
+# CGET 200
+GET http://127.0.0.1:80/api/v1/recambios/2020/equivalencias
 Accept: application/json
 
 ###
-# DELETE 204
-DELETE http://127.0.0.1:80/api/v1/recambios/1234
+# CGET 304 (caché válida)
+GET http://127.0.0.1:80/api/v1/recambios/2020/equivalencias
+If-None-Match: 33a64df551425fcc
+Prefer: code=304
+Accept: application/problem+json
+
+###
+# CGET 200 (caché no válida)
+GET http://127.0.0.1:80/api/v1/recambios/2020/equivalencias
+If-None-Match: a1b2c3d4e5f6
 Accept: application/json
 
 ###
-# POST 201
-POST http://127.0.0.1:80/api/v1/recambios
-Content-Type: application/json
-
-{
-  "nombre": "ETSISI recambios",
-  "empresa": "U.P.M.",
-  "version": "4.5.6",
-  "año_publicación": 2022
-}
-
-###
-# POST 201 (dinámico)
-POST http://127.0.0.1:80/api/v1/recambios
-Prefer: dynamic=true
-Content-Type: application/json
-
-{
-    "nombre": "ETSISI recambios",
-    "empresa": "U.P.M.",
-    "version": "4.5.6",
-    "año_publicación": 2022
-}
-
-###
-# PUT 422 (dinámico) - Falta cabecera If-Match
-PUT http://127.0.0.1:80/api/v1/recambios/1234
-Prefer: dynamic=true
-Content-Type: application/json
-
-{
-  "nombre": "ETSISI recambios"
-}
-
-###
-# PUT 200 (dinámico)
-PUT http://127.0.0.1:80/api/v1/recambios/1234
-If-Match: 12345
-Prefer: dynamic=true
-Content-Type: application/json
-
-{
-  "nombre": "ETSISI recambios"
-}
-
-###
-# CGET 404
-GET http://127.0.0.1:80/api/v1/recambios
+# CGET 404 (No existe el recambio)
+GET http://127.0.0.1:80/api/v1/recambios/2023/equivalencias
 Prefer: code=404
 Accept: application/problem+json
 
 ###
-# DELETE 404
-DELETE http://127.0.0.1:80/api/v1/recambios/1234
+# CGET 404 (No tiene recambios equivalentes)
+GET http://127.0.0.1:80/api/v1/recambios/2020/equivalencias
 Prefer: code=404
+Accept: application/problem+json
 
 ###
-# POST 422
-POST http://127.0.0.1:80/api/v1/recambios
-Prefer: code=422
+# POST 201
+POST http://127.0.0.1:80/api/v1/recambios/2020/equivalencias
 Content-Type: application/json
 
 {
-  "XXXnombre": "ETSISI recambios",
-  "empresa": "U.P.M.",
-  "version": "4.5.6",
-  "año_publicación": 2022
+  "recambioEquivalenteId": 2022
 }
 
 ###
-# PUT 404 (dinámico) - Not Found
-PUT http://127.0.0.1:80/api/v1/recambios/1234
-If-Match: a1b2c3d4e5f6
+# POST 400 (Id equivalente no existe)
+POST http://127.0.0.1:80/api/v1/recambios/2020/equivalencias
+Prefer: code=400
+Content-Type: application/json
+
+{
+  "recambioEquivalenteId": 2023
+}
+
+###
+# POST 400 (Id equivalente inválido)
+POST http://127.0.0.1:80/api/v1/recambios/2020/equivalencias
+Content-Type: application/json
+
+{
+  "recambioEquivalenteId": "Neumático"
+}
+
+###
+# POST 404 (No existe el recambio)
+POST http://127.0.0.1:80/api/v1/recambios/2023/equivalencias
 Prefer: code=404
 Content-Type: application/json
 
 {
-  "nombre": "ETSISI recambios"
+  "recambioEquivalenteId": 2022
 }
 
 ###
-# PUT 422 (dinámico) - Falta cabecera If-Match
-PUT http://127.0.0.1:80/api/v1/recambios/1234
-Prefer: code=422
+# POST 409 (Los recambios ya eran equivalentes)
+POST http://127.0.0.1:80/api/v1/recambios/2020/equivalencias
+Prefer: code=409
 Content-Type: application/json
 
 {
-  "nombre": "ETSISI recambios"
+  "recambioEquivalenteId": 2022
 }
