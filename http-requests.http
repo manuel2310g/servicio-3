@@ -283,3 +283,63 @@ Content-Type: application/json
 {
   "recambioEquivalenteId": 2022
 }
+
+########
+# /recambios/{recambioId}/equivalencias/{recambioEquivalenteId}
+########
+
+###
+# OPTIONS 204
+OPTIONS http://127.0.0.1:80/api/v1/recambios/2020/equivalencias/2022
+Accept: application/json
+
+###
+# GET 200
+GET http://127.0.0.1:80/api/v1/recambios/2020/equivalencias/2022
+Accept: application/json
+
+###
+# GET 404 (Alguno de los recambios no existe)
+GET http://127.0.0.1:80/api/v1/recambios/2023/equivalencias/2022
+Prefer: code=404
+Accept: application/problem+json
+
+###
+# GET 404 (Los recambios no son equivalentes)
+GET http://127.0.0.1:80/api/v1/recambios/2020/equivalencias/2022
+Prefer: code=404
+Accept: application/problem+json
+
+###
+# HEAD 200
+HEAD http://127.0.0.1:80/api/v1/recambios/2020/equivalencias/2022
+Accept: application/json
+
+###
+# HEAD 404 (Alguno de los recambios no existe)
+HEAD http://127.0.0.1:80/api/v1/recambios/2023/equivalencias/2022
+Prefer: code=404
+Accept: application/problem+json
+
+###
+# HEAD 404 (Los recambios no son equivalentes)
+HEAD http://127.0.0.1:80/api/v1/recambios/2020/equivalencias/2022
+Prefer: code=404
+Accept: application/problem+json
+
+###
+# DELETE 204
+DELETE http://127.0.0.1:80/api/v1/recambios/2020/equivalencias/2022
+Accept: application/json
+
+###
+# DELETE 404 (Alguno de los recambios no existe)
+DELETE http://127.0.0.1:80/api/v1/recambios/2023/equivalencias/2022
+Prefer: code=404
+Accept: application/problem+json
+
+###
+# DELETE 404 (Los recambios no son equivalentes)
+DELETE http://127.0.0.1:80/api/v1/recambios/2020/equivalencias/2022
+Prefer: code=404
+Accept: application/problem+json
