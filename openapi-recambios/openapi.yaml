@@ -124,9 +124,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Recambio'
-              examples:
-                recambioExample:
-                  $ref: '#/components/examples/recambio-example'
+              #examples:
+              #  recambioExample:
+              #    $ref: '#/components/examples/recambio-example'
         '400':
           description: '`BAD REQUEST`: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio'
           content:
@@ -186,9 +186,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Recambio'
-              examples:
-                recambioExample:
-                  $ref: '#/components/examples/recambio-example'
+              #examples:
+              #  recambioExample:
+              #    $ref: '#/components/examples/recambio-example'
         '404':
           $ref: '#/components/responses/Response_404'
 
@@ -468,8 +468,8 @@ components:
       $ref: "./responses/Response_422.yaml"
 
   examples:
-    recambio-example:
-      $ref: "./examples/recambio-example.yaml"
+    #recambio-example:
+    #  $ref: "./examples/recambio-example.yaml"
     recambio_RB-example:
       $ref: "./examples/recambio_RB-example.yaml"
     #recambio-equivalente-example:
