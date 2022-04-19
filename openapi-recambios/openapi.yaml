@@ -125,9 +125,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Recambio'
-              #examples:
-              #  recambioExample:
-              #    $ref: '#/components/examples/recambio-example'
         '400':
           description: '`BAD REQUEST`: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio'
           content:
@@ -149,9 +146,8 @@ paths:
       - $ref: '#/components/parameters/recambioId'
     get:
       summary: Obtiene un recambio identificado por su `recambioId`
-      description: |        
+      description: |
         La siguiente tabla define los códigos de estado que puede devolver este endpoint
-        
         | Status Code      | Descripción | Motivo                             |
         | ---------------- | ------------| -----------------------------------|
         | **200**          | OK          | Si el recambio existe                 |
@@ -166,9 +162,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Recambio'
-              #examples:
-              #  recambioExample:
-              #    $ref: '#/components/examples/recambio-example'
         '404':
           $ref: '#/components/responses/Response_404'
     put:
@@ -212,7 +205,6 @@ paths:
       summary: descataloga un recambio identificado por su `recambioId`
       description: |
         La siguiente tabla define los códigos de estado que puede devolver este endpoint
-        
         | Status Code      | Descripción | Motivo                                    |
         | ---------------- | ------------| ------------------------------------------|
         | **204**          | NO CONTENT  | El recambio existía y ha sido eliminado |
@@ -339,13 +331,10 @@ paths:
       responses:
         '200':
           description: Recambio equivalente
-          #headers:
-          #  ETag:
-          #    $ref: "#/components/headers/ETag"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Recambio_Equivalente"              
+                $ref: "#/components/schemas/Recambio_Equivalente"
         '404':
           $ref: "#/components/responses/Response_404"
     head:
@@ -360,9 +349,6 @@ paths:
       responses:
         '200':
           description: El recambio es equivalente
-          #headers:
-          #  ETag:
-          #    $ref: "#/components/headers/ETag"
         '404':
           description: Alguno de los recambios no existe o el recambio no es equivalente
     options:
@@ -455,33 +441,8 @@ components:
       $ref: "./responses/Response_422.yaml"
 
   examples:
-    #recambio-example:
-    #  $ref: "./examples/recambio-example.yaml"
     recambio_RB-example:
       $ref: "./examples/recambio_RB-example.yaml"
-    #recambio-equivalente-example:
-    #  value:
-    #    recambio:
-    #      id: 2022
-    #      nombre: 'Neumático: Continental VancoCamper 215/70 R15CP 109R 8PR'
-    #      descripcion: 'Neumático para coche'
-    #      proveedor: 'Continental VancoCamper'
-    #      modelo: '215/70 R15CP 109R 8PR'
-    #      cantidad: 20
-    #      vehiculos_compatibles: ['Hyundai IONIQ Híbrido', 'Hyundai i30 Fastback']
-    #      peso: 5
-    #      dimensiones:
-    #        alto: 40
-    #        ancho: 40
-    #        largo: 20
-    #      precio: 80
-    #    links:
-    #      parent:
-    #        href: 'https://example.com/api/v1/recambios/2020/equivalencias'
-    #        rel: 'getEquivalencias'
-    #      self:
-    #        href: 'https://example.com/api/v1/recambios/2020/equivalencias/2022'
-    #        rel: 'getEquivalencia deleteEquivalencia'
     response-http-404:
       $ref: "./examples/response-http-404.yaml"
     response-http-412:
