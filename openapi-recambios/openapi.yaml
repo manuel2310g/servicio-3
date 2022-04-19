@@ -141,29 +141,6 @@ paths:
                     status: 400
                     detail: Se ha introducido algún valor erróneo a la hora de dar de alta el nuevo recambio
                     instance: about:blank
-      
-    put:
-      summary: Modifica un recambio
-      description: |
-        La siguiente tabla define los códigos de estado que puede devolver este endpoint
-        | Status Code | Descripción         | Motivo                                        |
-        | ------------| --------------------| ----------------------------------------------|
-        | **200**     | OK                  | El recambio se ha modificado correctamente    |
-        | **404**     | NOT FOUND           | Si el recambio no existe                      |
-      operationId: recambio_put
-      parameters:
-        - $ref: '#/components/parameters/ifMatchParam'
-      requestBody:
-        $ref: '#/components/requestBodies/recambioUpdate'
-      responses:
-        '200':
-          description: '`OK`: el recambio ha sido modificado'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Recambio'
-        '404':
-          $ref: '#/components/responses/Response_404'
   /recambios/{recambioId}:
     parameters:
       - $ref: '#/components/parameters/recambioId'
@@ -191,6 +168,31 @@ paths:
               #    $ref: '#/components/examples/recambio-example'
         '404':
           $ref: '#/components/responses/Response_404'
+    put:
+      summary: Modifica un recambio
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        | Status Code | Descripción         | Motivo                                        |
+        | ------------| --------------------| ----------------------------------------------|
+        | **200**     | OK                  | El recambio se ha modificado correctamente    |
+        | **404**     | NOT FOUND           | Si el recambio no existe                      |
+        | **412**     | PRECONDITION FAILED | Si el ETag proporcionado no está actualizado  |
+      operationId: recambio_put
+      parameters:
+        - $ref: '#/components/parameters/ifMatchParam'
+      requestBody:
+        $ref: '#/components/requestBodies/recambioUpdate'
+      responses:
+        '200':
+          description: '`OK`: el recambio ha sido modificado'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+        '404':
+          $ref: '#/components/responses/Response_404'
+        '412':
+          $ref: '#/components/responses/Response_412'
 
     options:
       summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
