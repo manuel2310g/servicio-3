@@ -141,7 +141,63 @@ Content-Type: application/json
   "precio": 80
 }
 
-############################################################
+########
+# /recambios/{recambioId}
+########
+
+###
+# OPTIONS 204
+OPTIONS http://127.0.0.1:80/api/v1/recambios/2022
+Accept: application/json
+
+###
+# GET 200
+GET http://127.0.0.1:80/api/v1/recambios/2022
+Accept: application/json
+
+###
+# GET 404 (No existe el recambio)
+GET http://127.0.0.1:80/api/v1/recambios/2023
+Prefer: code=404
+Accept: application/problem+json
+
+###
+# PUT 200
+GET http://127.0.0.1:80/api/v1/recambios/2022
+If-Match: 33a64df551425fcc
+Accept: application/json
+#Content-Type: application/json
+
+{
+  "peso": 10
+}
+
+###
+# PUT 404 (No existe el recambio)
+PUT http://127.0.0.1:80/api/v1/recambios/2023
+If-Match: a1b2c3d4e5f6
+Prefer: code=404
+Accept: application/problem+json
+
+###
+# PUT 412 (ETag no válido)
+PUT http://127.0.0.1:80/api/v1/recambios/2022
+If-Match: a1b2c3d4e5f6
+Prefer: code=412
+Accept: application/problem+json
+
+###
+# DELETE 204 (Eliminado)
+DELETE http://127.0.0.1:80/api/v1/recambios/2022
+Accept: application/json
+
+###
+# DELETE 404 (No existe el recambio)
+DELETE http://127.0.0.1:80/api/v1/recambios/2023
+Prefer: code=404
+Accept: application/problem+json
+
+############################################################################################
 ###
 # GET ERROR 422 (validación parámetros)
 GET http://127.0.0.1:80/api/v1/recambios/abcd
@@ -168,16 +224,6 @@ Content-Type: application/json
   "version": "4.5.6",
   "año_publicación": 2022
 }
-
-###
-# COPTIONS 204
-OPTIONS http://127.0.0.1:80/api/v1/recambios
-Content-Type: application/json
-
-###
-# OPTIONS 204
-OPTIONS http://127.0.0.1:80/api/v1/recambios/5
-Content-Type: application/json
 
 ###
 # POST 201 (dinámico)
