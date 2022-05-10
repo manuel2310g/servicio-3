@@ -14,7 +14,7 @@ o
 $ docker-compose up
 ```
 
-Para parar, presionar `Ctrl + C` en el terminal (si se ha ejecutado sin acoplar) o  ejecutar el siguiente comando en la raíz del proyecto:
+Para parar, presionar `Ctrl + C` en el terminal (si se ha ejecutado sin desacoplar) o  ejecutar el siguiente comando en la raíz del proyecto:
 
 ```console
 $ docker compose down
